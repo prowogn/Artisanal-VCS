@@ -1,0 +1,64 @@
+<Window x:Class="ArtisanalVCS.Client.Views.BranchesWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Title="{Binding ProjectName, StringFormat='\{0\} - Branches'}" Height="750" Width="900"
+        Background="{StaticResource AppBg}" Foreground="{StaticResource TextFgBrush}"
+        WindowStartupLocation="CenterScreen">
+    <Grid Margin="10">
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="250"/>
+            <ColumnDefinition Width="*"/>
+        </Grid.ColumnDefinitions>
+
+        <StackPanel Grid.Column="0" Margin="0,0,10,0">
+            <TextBlock Text="Branches" FontSize="18" FontWeight="Bold"
+                       Foreground="{StaticResource AccentFg}" Margin="0,0,0,8"/>
+            <ListBox ItemsSource="{Binding Branches}" SelectedItem="{Binding SelectedBranch, Mode=TwoWay}"
+                     DisplayMemberPath="Name" Height="400"/>
+            <StackPanel Orientation="Horizontal" Margin="0,8,0,0">
+                <Button Content="New Commit" Command="{Binding OpenCreateCommitCommand}" Margin="0,0,5,0"/>
+                <Button Content="Merge" Command="{Binding OpenMergeCommand}" Margin="5,0,0,0"/>
+            </StackPanel>
+            <Button Content="Delete Branch" Command="{Binding DeleteBranchCommand}"
+                    Foreground="{StaticResource DangerFg}" Margin="0,5,0,0"
+                    Visibility="{Binding IsOwner, Converter={StaticResource BoolToVis}}"/>
+            <Button Content="Members" Command="{Binding OpenMembersCommand}" Margin="0,5,0,0"/>
+            <Button Content="Full History" Command="{Binding OpenHistoryCommand}" Margin="0,5,0,0"/>
+        </StackPanel>
+
+        <StackPanel Grid.Column="1">
+            <TextBlock Text="Commits" FontSize="18" FontWeight="Bold"
+                       Foreground="{StaticResource AccentFg}" Margin="0,0,0,8"/>
+            <ListBox ItemsSource="{Binding Commits}" Height="500"
+                     ScrollViewer.HorizontalScrollBarVisibility="Disabled">
+                <ListBox.ItemTemplate>
+                    <DataTemplate>
+                        <Border Background="{StaticResource CardBg}" CornerRadius="6" Padding="8,4" Margin="0,0,0,4"
+                                Cursor="Hand">
+                            <Border.InputBindings>
+                                <MouseBinding MouseAction="LeftClick"
+                                              Command="{Binding DataContext.OpenCommitDetailCommand, RelativeSource={RelativeSource AncestorType=ListBox}}"
+                                              CommandParameter="{Binding}"/>
+                            </Border.InputBindings>
+                            <StackPanel Orientation="Horizontal">
+                                <StackPanel>
+                                    <TextBlock Text="{Binding Message}" FontWeight="SemiBold"/>
+                                    <TextBlock Text="{Binding Timestamp, StringFormat='{}{0:g}'}"
+                                               Foreground="{StaticResource TextMutedBrush}" FontSize="11"/>
+                                    <TextBlock Text="{Binding AuthorName, StringFormat='by {0}'}"
+                                               Foreground="{StaticResource TextMutedBrush}" FontSize="11"/>
+                                </StackPanel>
+                                <Button Content="ZIP" Command="{Binding DataContext.DownloadCommitZipCommand, RelativeSource={RelativeSource AncestorType=ListBox}}"
+                                        CommandParameter="{Binding}" FontSize="10" Padding="4,0"
+                                        VerticalAlignment="Center" Margin="10,0,0,0"/>
+                            </StackPanel>
+                        </Border>
+                    </DataTemplate>
+                </ListBox.ItemTemplate>
+            </ListBox>
+        </StackPanel>
+
+        <ProgressBar Grid.ColumnSpan="2" IsIndeterminate="True" Height="4" VerticalAlignment="Top"
+                     Visibility="{Binding IsLoading, Converter={StaticResource BoolToVis}}"/>
+    </Grid>
+</Window>

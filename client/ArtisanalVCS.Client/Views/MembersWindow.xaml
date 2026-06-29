@@ -1,0 +1,53 @@
+<Window x:Class="ArtisanalVCS.Client.Views.MembersWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Title="Project Members" Height="600" Width="500"
+        Background="{StaticResource AppBg}" Foreground="{StaticResource TextFgBrush}"
+        WindowStartupLocation="CenterScreen">
+    <Grid Margin="15">
+        <StackPanel>
+            <TextBlock Text="Members" FontSize="20" Foreground="{StaticResource AccentFg}"
+                       HorizontalAlignment="Center" Margin="0,0,0,10"/>
+
+            <ListBox ItemsSource="{Binding Members}" Height="200" Margin="0,0,0,8"
+                     ScrollViewer.HorizontalScrollBarVisibility="Disabled">
+                <ListBox.ItemTemplate>
+                    <DataTemplate>
+                        <Border Background="{StaticResource CardBg}" CornerRadius="6" Padding="8,4" Margin="0,0,0,4">
+                            <Grid>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="*"/>
+                                    <ColumnDefinition Width="Auto"/>
+                                </Grid.ColumnDefinitions>
+                                <StackPanel Grid.Column="0">
+                                    <TextBlock Text="{Binding Username}" FontWeight="SemiBold"/>
+                                    <TextBlock Text="{Binding AddedAt, StringFormat='added {}{0:g}'}"
+                                               Foreground="{StaticResource TextMutedBrush}" FontSize="11"/>
+                                </StackPanel>
+                                <Button Grid.Column="1" Content="Remove" Foreground="{StaticResource DangerFg}"
+                                        Command="{Binding DataContext.RemoveMemberCommand, RelativeSource={RelativeSource AncestorType=ListBox}}"
+                                        CommandParameter="{Binding}" VerticalAlignment="Center"/>
+                            </Grid>
+                        </Border>
+                    </DataTemplate>
+                </ListBox.ItemTemplate>
+            </ListBox>
+
+            <TextBlock Text="{Binding StatusText}" Foreground="{StaticResource TextMutedBrush}" Margin="0,0,0,8"/>
+
+            <Border Background="{StaticResource PanelBg}" CornerRadius="6" Padding="8">
+                <StackPanel>
+                    <TextBlock Text="Add member" FontWeight="SemiBold" Margin="0,0,0,4"/>
+                    <TextBox Text="{Binding NewUsername, UpdateSourceTrigger=PropertyChanged}" Margin="0,0,0,4"/>
+                    <Button Content="Add" Command="{Binding AddMemberCommand}" HorizontalAlignment="Right"/>
+                </StackPanel>
+            </Border>
+
+            <TextBlock Text="{Binding ErrorMessage}" Foreground="{StaticResource DangerFg}"
+                       TextWrapping="Wrap" Margin="0,8,0,0"/>
+
+            <ProgressBar IsIndeterminate="True" Height="4" Margin="0,8,0,0"
+                         Visibility="{Binding IsLoading, Converter={StaticResource BoolToVis}}"/>
+        </StackPanel>
+    </Grid>
+</Window>

@@ -1,0 +1,30 @@
+<Window x:Class="ArtisanalVCS.Client.Views.LoginWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Title="ArtisanalVCS — Login" Height="500" Width="450"
+        Background="{StaticResource AppBg}" Foreground="{StaticResource TextFgBrush}"
+        WindowStartupLocation="CenterScreen">
+    <Grid Margin="20">
+        <StackPanel VerticalAlignment="Center">
+            <TextBlock Text="ArtisanalVCS" FontSize="22" FontWeight="Bold"
+                       Foreground="{StaticResource AccentFg}" HorizontalAlignment="Center" Margin="0,0,0,20"/>
+
+            <TextBlock Text="Username" Margin="0,0,0,2"/>
+            <TextBox Text="{Binding Username, UpdateSourceTrigger=PropertyChanged}" Margin="0,0,0,10"/>
+
+            <TextBlock Text="Password" Margin="0,0,0,2"/>
+            <PasswordBox x:Name="PasswordBox" PasswordChanged="OnPasswordChanged" Margin="0,0,0,15"/>
+
+            <Button Content="Login" Command="{Binding LoginCommand}" Height="32"/>
+
+            <Button Content="Register" Command="{Binding OpenRegisterCommand}" Height="28" Margin="0,5,0,0"
+                    Background="{StaticResource CardBg}"/>
+
+            <TextBlock Text="{Binding ErrorMessage}" Foreground="{StaticResource DangerFg}"
+                       TextWrapping="Wrap" Margin="0,10,0,0" Visibility="{Binding ErrorMessage, Converter={StaticResource StringToVis}}"/>
+
+            <ProgressBar IsIndeterminate="True" Height="4" Margin="0,10,0,0"
+                         Visibility="{Binding IsLoading, Converter={StaticResource BoolToVis}}"/>
+        </StackPanel>
+    </Grid>
+</Window>

@@ -1,0 +1,32 @@
+<Window x:Class="ArtisanalVCS.Client.Views.MergeWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Title="Merge Branches" Height="500" Width="500"
+        Background="{StaticResource AppBg}" Foreground="{StaticResource TextFgBrush}"
+        WindowStartupLocation="CenterScreen">
+    <Grid Margin="20">
+        <StackPanel VerticalAlignment="Center">
+            <TextBlock Text="Merge Branches" FontSize="20" Foreground="{StaticResource AccentFg}"
+                       HorizontalAlignment="Center" Margin="0,0,0,15"/>
+
+            <TextBlock Text="Source branch"/>
+            <ComboBox ItemsSource="{Binding Branches}" SelectedItem="{Binding SourceBranch, Mode=TwoWay}"
+                      Margin="0,0,0,8"/>
+
+            <TextBlock Text="Target branch"/>
+            <ComboBox ItemsSource="{Binding Branches}" SelectedItem="{Binding TargetBranch, Mode=TwoWay}"
+                      Margin="0,0,0,12"/>
+
+            <Button Content="Merge" Command="{Binding MergeCommand}" Height="32"
+                    Background="{StaticResource AccentFg}" Foreground="Black" FontWeight="Bold"/>
+
+            <TextBlock Text="{Binding ErrorMessage}" Foreground="{StaticResource DangerFg}"
+                       TextWrapping="Wrap" Margin="0,8,0,0"/>
+            <TextBlock Text="{Binding ResultMessage}" Foreground="{StaticResource SuccessFg}"
+                       TextWrapping="Wrap" Margin="0,4,0,0"/>
+
+            <ProgressBar IsIndeterminate="True" Height="4" Margin="0,8,0,0"
+                         Visibility="{Binding IsLoading, Converter={StaticResource BoolToVis}}"/>
+        </StackPanel>
+    </Grid>
+</Window>
