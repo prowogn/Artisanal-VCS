@@ -2,12 +2,8 @@
 
 Тестовый проект для защиты. Файлы с Hello World на разных языках.
 
-## Статус
+## Структура
 
-В разработке...
-
-## Планы
-
-- [x] C# hello world
-- [x] Python hello world
-- [ ] Добавить больше языков
+- hello.cs — C# version
+- hello.py — Python version
+- version.txt — версия
