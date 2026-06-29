@@ -1,9 +1,14 @@
 using System;
 
-class Program
+namespace HelloWorld
 {
-    static void Main()
+    class Program
     {
-        Console.WriteLine("Hello, World!");
+        static void Main(string[] args)
+        {
+            Console.WriteLine("Hello, World!");
+            Console.WriteLine("Press any key to exit...");
+            Console.ReadKey();
+        }
     }
 }
